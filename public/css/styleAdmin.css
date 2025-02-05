@@ -1,0 +1,152 @@
+/* General Styles */
+body {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f9;
+    color: #333;
+    line-height: 1.6;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    text-align: center;
+    color: #444;
+    margin-bottom: 30px;
+    font-size: 2rem;
+}
+
+/* Table Styles */
+.table-wrapper {
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+table th,
+table td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+table th {
+    background-color: #ff6f61;
+    color: white;
+    font-weight: 500;
+}
+
+table tr:hover {
+    background-color: #f9f9f9;
+}
+
+/* Booking Section */
+.booking {
+    margin-top: 40px;
+}
+
+.booking h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.booking form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.booking label {
+    font-weight: 500;
+}
+
+.booking input, .booking select {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 1rem;
+    width: 100%;
+}
+
+.booking button {
+    padding: 10px 20px;
+    background-color: #ff6f61;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.booking button:hover {
+    background-color: #e65a50;
+}
+
+/* FullCalendar Styling */
+#calendar {
+    margin-top: 30px;
+}
+
+/* Responsive Design for Mobile */
+@media (max-width: 768px) {
+    h1 {
+        font-size: 1.5rem;
+    }
+
+    table {
+        border: 0;
+    }
+
+    table thead {
+        display: none;
+    }
+
+    table tr {
+        display: block;
+        margin-bottom: 20px;
+        border-bottom: 2px solid #ddd;
+    }
+
+    table td {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 0.9rem;
+        border-bottom: 1px solid #ddd;
+        padding: 10px;
+    }
+
+    table td::before {
+        content: attr(data-label);
+        font-weight: 500;
+        color: #ff6f61;
+        margin-right: 10px;
+    }
+
+    .booking form {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .booking select {
+        width: 100%;
+    }
+
+    .booking button {
+        width: 100%;
+    }
+}
+

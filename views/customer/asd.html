@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hair Salon - Szépség és Stílus</title>
+    <link rel="stylesheet" href="\css\style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Header Section -->
+    <header>
+        <div class="logo">
+            <img src="/images/icon.png" alt="Salon Logo">
+        </div>
+        <nav>
+            <button class="hamburger" aria-label="Toggle navigation">☰</button>
+            <ul class="nav-links">
+                <li><a href="#home">Kezdőlap</a></li>
+                <li><a href="#about">Rólunk</a></li>
+                <li><a href="#services">Szolgáltatások</a></li>
+                <li><a href="#gallery">Galéria</a></li>
+                <li><a href="#booking">Időpontfoglalás</a></li>
+                <li><a href="#contact">Kapcsolat</a></li>
+            </ul>
+        </nav>
+        <a href="#booking" class="cta-button">Foglalás most</a>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h1>Szépség és Stílus</h1>
+            <p>Fedezze fel új stílusát szakértő fodrászainkkal.</p>
+            <a href="#booking" class="cta-button">Időpontfoglalás</a>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about" id="about">
+        <h2>Rólunk</h2>
+        <div class="about-content">
+            <p>A Hair Salon egy modern fodrászszalon, ahol a minőség és a stílus találkozik. Csapatunk kiemelkedő szakértelemmel és kreativitással várja ügyfeleinket.</p>
+            <img src="https://mirrorhajszalon.hu/wp-content/uploads/2018/10/MG_7011.jpg" alt="Salon Interior">
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section class="services" id="services">
+        <h2>Szolgáltatások</h2>
+        <div class="service-cards">
+            <div class="card">
+                <h3>Hajvágás</h3>
+                <p>Professzionális hajvágás szakértő fodrászainkkal.</p>
+            </div>
+            <div class="card">
+                <h3>Hajfestés</h3>
+                <p>Modern hajfestési technikák és termékek.</p>
+            </div>
+            <div class="card">
+                <h3>Hajápolás</h3>
+                <p>Hajápolási kezelések a tökéletes hatásért.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section class="gallery" id="gallery">
+        <h2>Galéria</h2>
+        <div class="gallery-images">
+            
+            <img src="https://i.pinimg.com/736x/c4/2f/b7/c42fb7d85b2bb9213b973751afcdf588.jpg" alt="Gallery Image 1">
+            <img src="https://i.pinimg.com/736x/39/de/fd/39defd88bcd0ee63b9851a96ebaa1163.jpg" alt="Gallery Image 2">
+            <img src="https://e0b6ddc6.delivery.rocketcdn.me/wp-content/uploads/2024/07/Ombre-Straight-2.jpeg.webp" alt="Gallery Image 3">
+            <img src="https://e0b6ddc6.delivery.rocketcdn.me/wp-content/uploads/2024/07/Half-Up-Style-1.jpeg" alt="Gallery Image 3">
+        </div>
+    </section>
+
+    <!-- Booking Section -->
+    <div class="container">
+        <section class="booking">
+            <h2>Időpontfoglalás</h2>
+            <form action="/customer/book" method="POST">
+                <label for="name">Név:</label>
+                <input type="text" id="name" name="name" required>
+
+                <label for="email">E-mail:</label>
+                <input type="email" id="email" name="email" required>
+
+                <label for="dateFrom">Kezdés:</label>
+                <input type="text" id="dateFrom" name="dateFrom" readonly required>
+
+                <label for="dateTo">Befejezés:</label>
+                <input type="text" id="dateTo" name="dateTo" readonly required>
+
+                <label for="service">Szolgáltatás:</label>
+                <select name="service" id="service" required>
+                    <option value="Haircut">Hajvágás</option>
+                    <option value="Coloring">Hajfestés</option>
+                    <option value="Styling">Hajstílus</option>
+                    <option value="Treatment">Hajápolás</option>
+                </select>
+                <button type="submit">Foglalás</button>
+            </form>
+        </section>
+        <div id="calendar"></div>
+    </div>
+
+    <!-- FullCalendar JS -->
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.0/main.min.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const calendarEl = document.getElementById('calendar');
+            const fromInput = document.getElementById('dateFrom');
+            const toInput = document.getElementById('dateTo');
+    
+            fetch('/api/appointments')
+                .then(response => response.json())
+                .then(data => {
+                    const calendar = new FullCalendar.Calendar(calendarEl, {
+                        locale: 'hu',
+                        initialView: 'timeGridWeek',
+                        slotLabelFormat: {
+                            hour: '2-digit',
+                            minute: '2-digit',
+                            hour12: false
+                        },
+                        headerToolbar: {
+                            left: 'timeGridWeek,timeGridDay',
+                            center: 'title',
+                            right: 'prev,next today'
+                        },
+                        businessHours: {
+                            daysOfWeek: [1, 2, 3, 4, 5],
+                            startTime: '08:00',
+                            endTime: '20:00'
+                        },
+                        slotMinTime: "08:00:00",
+                        slotMaxTime: "20:00:00",
+                        selectable: true,
+                        selectMirror: true,
+                        allDaySlot: false,
+                        weekends: false,
+                        select: function (info) {
+                            let start = new Date(info.start.getTime() - (info.start.getTimezoneOffset() * 60000));
+                            let end = new Date(info.end.getTime() - (info.end.getTimezoneOffset() * 60000));
+                            let formattedStart = start.toISOString().slice(0, 16);
+                            let formattedEnd = end.toISOString().slice(0, 16);
+
+                            // Check if the selected time is within the allowed range (08:00 - 20:00)
+                            if (start.getHours() < 8 || end.getHours() > 20) {
+                                alert("Csak 08:00 és 20:00 között lehet foglalni!");
+                                fromInput.value = '';
+                                toInput.value = '';
+                                return;
+                            }
+
+                            // Check if the appointment duration exceeds 2 hours
+                            const duration = (end - start) / (1000 * 60 * 60); // Convert milliseconds to hours
+                            if (duration > 2) {
+                                alert("Az időpontok maximum 2 órásak lehetnek!");
+                                fromInput.value = '';
+                                toInput.value = '';
+                                return;
+                            }
+
+                            // Check if the selected time conflicts with existing bookings
+                            let conflictFound = false;
+                            for (let unavailable of data) {
+                                let unStart = new Date(unavailable.dateFrom);
+                                let unEnd = new Date(unavailable.dateTo);
+                                unStart = new Date(unStart.getTime() - unStart.getTimezoneOffset() * 60000);
+                                unEnd = new Date(unEnd.getTime() - unEnd.getTimezoneOffset() * 60000);
+
+                                // Check for time overlap
+                                if ((start >= unStart && start < unEnd) || (end > unStart && end <= unEnd)) {
+                                    conflictFound = true;
+                                    alert("A kiválasztott időpont nem elérhető!");
+                                    break;
+                                }
+                            }
+
+                            if (!conflictFound) {
+                                fromInput.value = formattedStart;
+                                toInput.value = formattedEnd;
+                            } else {
+                                fromInput.value = '';
+                                toInput.value = '';
+                            }
+                        },
+                        events: data.map(slot => ({
+                            title: "Foglalt",
+                            start: slot.dateFrom,
+                            end: slot.dateTo,
+                            color: "#ff0000"
+                        })),
+                        validRange: {
+                            start: new Date().toISOString().split('T')[0]
+                        }
+                    });
+    
+                    calendar.render();
+                })
+                .catch(error => console.error('Error fetching appointments:', error));
+        });
+    </script>
+    
+    
+
+    <!-- Contact Section -->
+    <section class="contact" id="contact">
+        <h2>Kapcsolat</h2>
+        <div class="contact-info">
+            <p><strong>Cím:</strong> 1234 Budapest, Szépség utca 5.</p>
+            <p><strong>Telefon:</strong> +36 1 234 5678</p>
+            <p><strong>E-mail:</strong> info@hairsalon.hu</p>
+        </div>
+        <div class="map">
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2695.506676115042!2d19.04082131562698!3d47.49854697917767!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4741dc3d8f8f3f3f%3A0x9c8d2f8f8f8f8f8f!2sBudapest%2C%20Sz%C3%A9ps%C3%A9g%20utca%205%2C%201234!5e0!3m2!1shu!2shu!4v1622542800000!5m2!1shu!2shu" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+        </div>
+    </section>
+
+    <!-- Footer Section -->
+    <footer>
+        <p>© 2023 Hair Salon. Minden jog fenntartva.</p>
+    </footer>
+
+    <!-- JavaScript for Hamburger Menu -->
+    <script>
+        const hamburger = document.querySelector('.hamburger');
+        const navLinks = document.querySelector('.nav-links');
+
+        hamburger.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+    </script>
+</body>
+</html>

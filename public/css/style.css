@@ -1,0 +1,458 @@
+/* General Styles */
+body {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    color: #333;
+    line-height: 1.6;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 10%;
+    background-color: #f8f8f8;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+#contactLink {
+    color: white;
+}
+
+.logo img {
+    height: 50px;
+}
+
+nav {
+    display: flex;
+    align-items: center;
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+}
+
+.nav-links li a {
+    text-decoration: none;
+    color: #333;
+    font-weight: 500;
+}
+
+.cta-button {
+    background-color: #ff6f61;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.cta-button:hover {
+    background-color: #e65a50;
+}
+
+.hamburger {
+    display: none;
+    font-size: 1.5rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+/* Hero Section */
+.hero {
+    background-image: url("/images/cover.png");
+    background-size: cover;
+    background-position: center;
+    height: 400px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: white;
+}
+
+.hero-content h1 {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+}
+
+.hero-content p {
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+}
+
+/* About Section */
+.about {
+    padding: 50px 10%;
+    text-align: center;
+}
+
+.about-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+.about-content p {
+    text-align: center;
+}
+
+.about-content img {
+    max-width: 100%;
+    border-radius: 10px;
+}
+
+/* Services Section */
+.services {
+    padding: 50px 20px;
+    text-align: center;
+    background-color: #fff4f3;
+}
+
+.service-cards {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 30px;
+    margin-top: 30px;
+}
+
+.card {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 320px;  /* Maintain max-width for larger screens */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    overflow: hidden;
+    box-sizing: border-box;  /* Ensure the box respects padding */
+}
+
+/* Card image adjustments */
+.card img {
+    width: 100%;
+    object-fit: cover;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    max-height: 200px;  /* Limit the height */
+}
+
+/* Media Queries for smaller screens */
+@media (max-width: 768px) {
+    .service-cards {
+        gap: 20px;  /* Slightly reduced gap on tablets */
+    }
+
+    .card {
+        width: 100%;  /* Full width on tablets */
+        max-width: 100%;  /* Ensure card fits on the screen */
+        padding: 15px;  /* Less padding on smaller screens */
+    }
+
+    .card img {
+        max-height: 180px;  /* Slightly reduced height for images */
+    }
+}
+
+@media (max-width: 480px) {
+    .services {
+        padding: 40px 20px;
+    }
+
+    .service-cards {
+        gap: 15px;  /* Reduced gap for smaller screens */
+    }
+
+    .card {
+        width: 100%;  /* Full width on small screens */
+        max-width: 100%;  /* Ensure card doesn’t overflow */
+        padding: 10px;  /* Reduced padding */
+    }
+
+    .card img {
+        max-height: 150px;  /* Reduce the height for mobile to prevent overflow */
+    }
+}
+
+
+/* Gallery Section */
+.gallery {
+    padding: 50px 20px;
+    text-align: center;
+}
+
+.gallery h2 {
+    font-size: 2.5rem;
+    margin-bottom: 30px;
+}
+
+.gallery-images {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    flex-wrap: nowrap;  /* Prevent wrapping of images */
+    overflow-x: auto;   /* Allow horizontal scrolling if images are too wide */
+}
+
+.gallery-images img {
+    width: 100%;        /* Ensure the images take up the width of their container */
+    max-width: 300px;   /* Limit the width of each image */
+    border-radius: 10px;
+    object-fit: cover;  /* Maintain aspect ratio without stretching */
+    margin-bottom: 20px;
+}
+
+/* Ensure that the gallery can fit images in one row and is scrollable */
+@media (max-width: 768px) {
+    .gallery-images {
+        gap: 15px;  /* Slightly reduced gap on tablets */
+    }
+}
+
+@media (max-width: 480px) {
+    .gallery-images {
+        gap: 10px;  /* Further reduced gap on mobile */
+    }
+
+    .gallery-images img {
+        max-width: 180px;  /* Smaller width for mobile screens */
+    }
+}
+
+
+
+/* Booking Section */
+.booking {
+    padding: 50px 10%;
+    text-align: center;
+    background-color: #fff4f3;
+}
+
+.booking form {
+    max-width: 500px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.booking label {
+    font-weight: 500;
+    text-align: left;
+}
+
+.booking input, .booking select {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1rem;
+}
+
+.booking button {
+    background-color: #ff6f61;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+.booking button:hover {
+    background-color: #e65a50;
+}
+
+/* Contact Section */
+.contact {
+    padding: 50px 10%;
+    text-align: center;
+}
+
+.contact-info {
+    margin-bottom: 20px;
+}
+
+.map iframe {
+    width: 100%;
+    height: 300px;
+    border: none;
+    border-radius: 10px;
+}
+
+
+/* Footer Section */
+footer {
+    text-align: center;
+    padding: 20px;
+    background-color: #333;
+    color: white;
+    margin-top: 50px;
+}
+
+/* Media Queries for Responsiveness */
+@media (max-width: 768px) {
+    header {
+        flex-direction: column;
+        padding: 20px;
+    }
+
+    .hamburger {
+        display: block;
+    }
+
+    .nav-links {
+        display: none;
+        flex-direction: column;
+        gap: 10px;
+        width: 100%;
+    }
+
+    .nav-links.active {
+        display: flex;
+    }
+
+    .hero-content h1 {
+        font-size: 2rem;
+    }
+
+    .hero-content p {
+        font-size: 1rem;
+    }
+
+    .about-content {
+        flex-direction: column;
+    }
+
+    .service-cards {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .card {
+        width: 100%;
+        max-width: 100%;
+    }
+
+    .gallery-images img {
+        width: 100%;
+        max-width: 100%;
+    }
+
+    .booking form {
+        width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero-content h1 {
+        font-size: 1.5rem;
+    }
+
+    .hero-content p {
+        font-size: 0.9rem;
+    }
+
+    .cta-button {
+        padding: 8px 16px;
+        font-size: 0.9rem;
+    }
+}
+
+/* Ensure the calendar takes up full width on smaller screens */
+@media (max-width: 768px) {
+    .fc {
+      width: 100%;
+    }
+  
+    .fc-toolbar {
+      flex-direction: column;
+      align-items: center;
+    }
+  
+    .fc-day-grid-container {
+      width: 100%;
+    }
+  
+    .fc-day {
+      padding: 5px;
+      font-size: 12px; /* Make text size smaller for mobile */
+    }
+  
+    .fc-day-number {
+      font-size: 14px;
+    }
+  
+    .fc-event {
+      font-size: 10px;
+      padding: 2px 5px;
+    }
+  
+    .fc-event-title {
+      font-size: 10px;
+    }
+  
+    .fc-day-header {
+      font-size: 12px;
+    }
+  
+    /* Adjust the header toolbar to better fit smaller screens */
+    .fc-toolbar .fc-button {
+      padding: 5px 10px;
+      font-size: 12px;
+    }
+  
+    .fc-toolbar .fc-button-group {
+      display: flex;
+      justify-content: space-around;
+      width: 100%;
+    }
+  }
+  
+  /* Make the calendar even more mobile-friendly under 480px */
+  @media (max-width: 480px) {
+    .fc-day {
+      padding: 3px;
+      font-size: 10px;
+    }
+  
+    .fc-toolbar {
+      font-size: 12px;
+    }
+  
+    .fc-day-number {
+      font-size: 12px;
+    }
+  
+    .fc-event {
+      font-size: 8px;
+      padding: 2px 4px;
+    }
+  
+    .fc-event-title {
+      font-size: 8px;
+    }
+  
+    .fc-header-toolbar {
+      flex-direction: column;
+    }
+  
+    .fc-toolbar .fc-button {
+      padding: 4px 8px;
+      font-size: 10px;
+    }
+  }
+  
+  /* Ensure that the events do not overflow the calendar container */
+  .fc-day-grid-event {
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  

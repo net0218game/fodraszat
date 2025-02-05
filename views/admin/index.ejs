@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %></title>
+    <link rel="stylesheet" href="/css/styleAdmin.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <h1>Időpontok kezelése</h1>
+
+        
+        <div class="table-wrapper">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Név</th>
+                        <th>E-mail</th>
+                        <th>telefonszám</th>
+                        <th>Időpont</th>
+                        <th>Időpont Vége</th>
+                        <th>Szolgáltatás</th>
+                        <th>Státusz</th>
+                        <th>Frissítés</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% appointments.filter(appointment => appointment.status !== 'Completed').forEach(appointment => { %>
+                    <tr>
+                        <td data-label="Név"><%= appointment.name %></td>
+                        <td data-label="E-mail"><%= appointment.email %></td>
+                        <td data-label="Telefonszám"><%= appointment.phone %></td>
+                        <td data-label="Időpont"><%= appointment.dateFrom.toLocaleString() %></td>
+                        <td data-label="Időpont Vége"><%= appointment.dateTo.toLocaleString() %></td>
+                        <td data-label="Szolgáltatás"><%= appointment.service %></td>
+                        <td data-label="Státusz">
+                            <form action="/admin/update" method="POST">
+                                <input type="hidden" name="appointmentId" value="<%= appointment._id %>">
+                                <select name="status">
+                                    <option value="Pending" <%= appointment.status === 'Pending' ? 'selected' : '' %>>Pending</option>
+                                    <option value="Confirmed" <%= appointment.status === 'Confirmed' ? 'selected' : '' %>>Confirmed</option>
+                                    <option value="Completed" <%= appointment.status === 'Completed' ? 'selected' : '' %>>Completed</option>
+                                </select>
+                        </td>
+                        <td data-label="Frissítés">
+                                <button type="submit">Frissítés</button>
+                            </form>
+                        </td>
+                    </tr>
+                    <% }); %>
+                </tbody>                
+            </table>
+        </div>
+    </div>
+</body>
+</html>

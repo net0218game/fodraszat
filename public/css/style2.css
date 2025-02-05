@@ -1,0 +1,413 @@
+/* Global Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    background-color: #f5f5f5;
+    color: #333;
+}
+
+/* Header Styles */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    background-color: #333;
+    color: white;
+}
+
+header .logo img {
+    max-width: 120px;
+}
+
+header nav {
+    display: flex;
+    align-items: center;
+}
+
+header nav .hamburger {
+    display: none;
+    font-size: 30px;
+    cursor: pointer;
+    background: none;
+    border: none;
+    color: white;
+    margin-right: 15px;
+}
+
+header nav .nav-links {
+    display: flex;
+    gap: 20px;
+}
+
+header nav .nav-links li {
+    list-style: none;
+}
+
+header nav .nav-links li a {
+    color: white;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+header .cta-button {
+    padding: 10px 20px;
+    background-color: #ff7f50;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: 600;
+}
+
+/* Hero Section */
+.hero {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: url('/images/cover.png') no-repeat center center/cover;
+    height: 100vh;
+    color: white;
+    text-align: center;
+    padding: 0 20px;
+}
+
+.hero-content h1 {
+    font-size: 3rem;
+    margin-bottom: 20px;
+}
+
+.hero-content p {
+    font-size: 1.2rem;
+    margin-bottom: 30px;
+}
+
+/* About Section */
+.about {
+    padding: 50px 20px;
+    text-align: center;
+    background-color: #fff;
+}
+
+.about h2 {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+}
+
+.about-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+}
+
+.about-content p {
+    font-size: 1.1rem;
+    width: 50%;
+}
+
+.about-content img {
+    width: 40%;
+    border-radius: 10px;
+}
+
+/* Services Section */
+.services {
+    padding: 50px 20px;
+    background-color: #f4f4f4;
+    text-align: center;
+}
+
+.services h2 {
+    font-size: 2.5rem;
+    margin-bottom: 30px;
+}
+
+.service-cards {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.service-cards .card {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    width: 30%;
+}
+
+.service-cards .card h3 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+}
+
+/* Gallery Section */
+.gallery {
+    padding: 50px 20px;
+    text-align: center;
+}
+
+.gallery h2 {
+    font-size: 2.5rem;
+    margin-bottom: 30px;
+}
+
+.gallery-images {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.gallery-images img {
+    width: 30%;
+    border-radius: 10px;
+}
+
+/* Booking Section */
+.booking {
+    padding: 50px 20px;
+    text-align: center;
+}
+
+.booking h2 {
+    font-size: 2.5rem;
+    margin-bottom: 30px;
+}
+
+.booking form {
+    max-width: 600px;
+    margin: 0 auto;
+    text-align: left;
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.booking form label {
+    display: block;
+    margin-bottom: 10px;
+    font-size: 1.1rem;
+}
+
+.booking form input,
+.booking form select,
+.booking form button {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    font-size: 1rem;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+.booking form button {
+    background-color: #ff7f50;
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+/* Calendar Section */
+#calendar {
+    max-width: 100%;
+    margin-top: 30px;
+}
+
+/* Contact Section */
+.contact {
+    padding: 50px 20px;
+    background-color: #fff;
+    text-align: center;
+}
+
+.contact-info {
+    margin-bottom: 30px;
+}
+
+.contact-info p {
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+}
+
+.map iframe {
+    width: 100%;
+    height: 300px;
+    border: none;
+    border-radius: 10px;
+}
+
+/* Footer Section */
+footer {
+    text-align: center;
+    padding: 20px;
+    background-color: #333;
+    color: white;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+    header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    header .cta-button {
+        margin-top: 10px;
+    }
+
+    header nav {
+        display: none;
+        width: 100%;
+    }
+
+    header nav.active {
+        display: block;
+    }
+
+    header nav .nav-links {
+        display: block;
+        width: 100%;
+        padding: 20px;
+        background-color: #333;
+    }
+
+    header nav .nav-links li {
+        text-align: center;
+        margin: 10px 0;
+    }
+
+    header nav .nav-links li a {
+        color: white;
+    }
+
+    .hero {
+        height: 60vh;
+    }
+
+    .about-content {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .service-cards {
+        flex-direction: column;
+    }
+
+    .gallery-images {
+        flex-direction: column;
+    }
+
+    .gallery-images img {
+        width: 100%;
+        margin-bottom: 20px;
+    }
+
+    .booking form {
+        width: 100%;
+    }
+
+    .booking form input,
+    .booking form select,
+    .booking form button {
+        font-size: 1.1rem;
+    }
+}
+
+/* Ensure the calendar takes up full width on smaller screens */
+@media (max-width: 768px) {
+    .fc {
+      width: 100%;
+    }
+  
+    .fc-toolbar {
+      flex-direction: column;
+      align-items: center;
+    }
+  
+    .fc-day-grid-container {
+      width: 100%;
+    }
+  
+    .fc-day {
+      padding: 5px;
+      font-size: 12px; /* Make text size smaller for mobile */
+    }
+  
+    .fc-day-number {
+      font-size: 14px;
+    }
+  
+    .fc-event {
+      font-size: 10px;
+      padding: 2px 5px;
+    }
+  
+    .fc-event-title {
+      font-size: 10px;
+    }
+  
+    .fc-day-header {
+      font-size: 12px;
+    }
+  
+    /* Adjust the header toolbar to better fit smaller screens */
+    .fc-toolbar .fc-button {
+      padding: 5px 10px;
+      font-size: 12px;
+    }
+  
+    .fc-toolbar .fc-button-group {
+      display: flex;
+      justify-content: space-around;
+      width: 100%;
+    }
+  }
+  
+  /* Make the calendar even more mobile-friendly under 480px */
+  @media (max-width: 480px) {
+    .fc-day {
+      padding: 3px;
+      font-size: 10px;
+    }
+  
+    .fc-toolbar {
+      font-size: 12px;
+    }
+  
+    .fc-day-number {
+      font-size: 12px;
+    }
+  
+    .fc-event {
+      font-size: 8px;
+      padding: 2px 4px;
+    }
+  
+    .fc-event-title {
+      font-size: 8px;
+    }
+  
+    .fc-header-toolbar {
+      flex-direction: column;
+    }
+  
+    .fc-toolbar .fc-button {
+      padding: 4px 8px;
+      font-size: 10px;
+    }
+  }
+  
+  /* Ensure that the events do not overflow the calendar container */
+  .fc-day-grid-event {
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  

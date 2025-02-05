@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hair Salon - Szépség és Stílus</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    <!-- FullCalendar CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.0/main.min.css" rel="stylesheet">
+    <style>
+        /* Global Styles */
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+            color: #333;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            max-width: 1200px;
+            margin: auto;
+        }
+
+        h2 {
+            font-size: 2rem;
+            color: #4e4e4e;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        /* Booking Form Styling */
+        .booking form {
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 500px;
+            margin-bottom: 30px;
+        }
+
+        .booking label {
+            display: block;
+            font-size: 1rem;
+            margin-bottom: 5px;
+            color: #333;
+        }
+
+        .booking input, .booking select {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+        .booking button {
+            width: 100%;
+            padding: 14px;
+            background-color: #ff5a5f;
+            border: none;
+            border-radius: 5px;
+            color: white;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .booking button:hover {
+            background-color: #e14c53;
+        }
+
+        /* Calendar Section Styling */
+        #calendar {
+            width: 100%;
+            height: 400px;
+            max-height: 600px;
+            margin-top: 30px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+        }
+
+        /* Mobile Responsiveness */
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+
+            .booking form {
+                width: 100%;
+                padding: 20px;
+            }
+
+            #calendar {
+                height: 300px;
+            }
+
+            h2 {
+                font-size: 1.8rem;
+            }
+
+            .booking input, .booking select, .booking button {
+                font-size: 1rem;
+                padding: 10px;
+            }
+
+            .booking label {
+                font-size: 0.9rem;
+            }
+        }
+
+        /* Extra Mobile Responsiveness */
+        @media (max-width: 480px) {
+            h2 {
+                font-size: 1.5rem;
+            }
+
+            .booking input, .booking select, .booking button {
+                padding: 10px;
+            }
+
+            .booking form {
+                padding: 15px;
+            }
+
+            #calendar {
+                height: 250px;
+            }
+        }
+
+        /* For wider screens (larger than 1024px) */
+        @media (min-width: 1025px) {
+            .container {
+                flex-direction: row;
+                justify-content: space-between;
+                padding: 30px;
+            }
+
+            .booking {
+                width: 45%;
+                margin-right: 20px;
+            }
+
+            #calendar {
+                width: 55%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- Booking Section -->
+        <section class="booking">
+            <h2>Időpontfoglalás</h2>
+            <form action="/customer/book" method="POST">
+                <label for="name">Név:</label>
+                <input type="text" id="name" name="name" required>
+
+                <label for="email">E-mail:</label>
+                <input type="email" id="email" name="email" required>
+
+                <label for="dateFrom">Kezdés:</label>
+                <input type="text" id="dateFrom" name="dateFrom" readonly required>
+
+                <label for="dateTo">Befejezés:</label>
+                <input type="text" id="dateTo" name="dateTo" readonly required>
+
+                <label for="service">Szolgáltatás:</label>
+                <select name="service" id="service" required>
+                    <option value="Haircut">Hajvágás</option>
+                    <option value="Coloring">Hajfestés</option>
+                    <option value="Styling">Hajstílus</option>
+                    <option value="Treatment">Hajápolás</option>
+                </select>
+                <button type="submit">Foglalás</button>
+            </form>
+        </section>
+
+        <!-- Calendar Section -->
+        <div id="calendar"></div>
+    </div>
+
+    <!-- FullCalendar JS -->
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.0/main.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const calendarEl = document.getElementById('calendar');
+            const fromInput = document.getElementById('dateFrom');
+            const toInput = document.getElementById('dateTo');
+    
+            fetch('/api/appointments')
+                .then(response => response.json())
+                .then(data => {
+                    const calendar = new FullCalendar.Calendar(calendarEl, {
+                        locale: 'hu',
+                        initialView: 'timeGridWeek',
+                        slotLabelFormat: {
+                            hour: '2-digit',
+                            minute: '2-digit',
+                            hour12: false
+                        },
+                        headerToolbar: {
+                            left: 'timeGridWeek,timeGridDay',
+                            center: 'title',
+                            right: 'prev,next today'
+                        },
+                        businessHours: {
+                            daysOfWeek: [1, 2, 3, 4, 5],
+                            startTime: '08:00',
+                            endTime: '20:00'
+                        },
+                        slotMinTime: "08:00:00",
+                        slotMaxTime: "20:00:00",
+                        selectable: true,
+                        selectMirror: true,
+                        allDaySlot: false,
+                        weekends: false,
+                        select: function (info) {
+                            let start = new Date(info.start.getTime() - (info.start.getTimezoneOffset() * 60000));
+                            let end = new Date(info.end.getTime() - (info.end.getTimezoneOffset() * 60000));
+                            let formattedStart = start.toISOString().slice(0, 16);
+                            let formattedEnd = end.toISOString().slice(0, 16);
+
+                            // Check if the selected time is within the allowed range (08:00 - 20:00)
+                            if (start.getHours() < 8 || end.getHours() > 20) {
+                                alert("Csak 08:00 és 20:00 között lehet foglalni!");
+                                fromInput.value = '';
+                                toInput.value = '';
+                                return;
+                            }
+
+                            // Check if the appointment duration exceeds 2 hours
+                            const duration = (end - start) / (1000 * 60 * 60); // Convert milliseconds to hours
+                            if (duration > 2) {
+                                alert("Az időpontok maximum 2 órásak lehetnek!");
+                                fromInput.value = '';
+                                toInput.value = '';
+                                return;
+                            }
+
+                            // Check if the selected time conflicts with existing bookings
+                            let conflictFound = false;
+                            for (let unavailable of data) {
+                                let unStart = new Date(unavailable.dateFrom);
+                                let unEnd = new Date(unavailable.dateTo);
+                                unStart = new Date(unStart.getTime() - unStart.getTimezoneOffset() * 60000);
+                                unEnd = new Date(unEnd.getTime() - unEnd.getTimezoneOffset() * 60000);
+
+                                // Check for time overlap
+                                if ((start >= unStart && start < unEnd) || (end > unStart && end <= unEnd)) {
+                                    conflictFound = true;
+                                    alert("A kiválasztott időpont nem elérhető!");
+                                    break;
+                                }
+                            }
+
+                            if (!conflictFound) {
+                                fromInput.value = formattedStart;
+                                toInput.value = formattedEnd;
+                            } else {
+                                fromInput.value = '';
+                                toInput.value = '';
+                            }
+                        },
+                        events: data.map(slot => ({
+                            title: "Foglalt",
+                            start: slot.dateFrom,
+                            end: slot.dateTo,
+                            color: "#ff0000"
+                        })),
+                        validRange: {
+                            start: new Date().toISOString().split('T')[0]
+                        }
+                    });
+
+                    calendar.render();
+                })
+                .catch(error => console.error('Error fetching appointments:', error));
+        });
+    </script>
+
+</body>
+</html>
