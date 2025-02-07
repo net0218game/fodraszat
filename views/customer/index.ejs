@@ -113,7 +113,7 @@
 
     <!-- FullCalendar JS -->
     <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.0/main.min.js"></script>
-    
+
     <script>
         const fromInput = document.getElementById('dateFrom');
         const toInput = document.getElementById('dateTo');
@@ -150,10 +150,10 @@
                         allDaySlot: false,
                         weekends: false,
                         select: function (info) {
-                            // Ensure correct handling of time zone offsets (Budapest time zone)
+                            // Ensure correct handling of Budapest time zone
                             let start = new Date(info.start);
                             let end = new Date(info.end);
-                            
+    
                             // Adjust time to the Budapest time zone
                             start = new Date(start.toLocaleString('en-US', { timeZone: 'Europe/Budapest' }));
                             end = new Date(end.toLocaleString('en-US', { timeZone: 'Europe/Budapest' }));
@@ -227,7 +227,6 @@
             }
         });
     </script>
-    
     
     
 
