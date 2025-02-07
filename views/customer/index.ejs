@@ -118,7 +118,7 @@
         const fromInput = document.getElementById('dateFrom');
         const toInput = document.getElementById('dateTo');
         const form = document.querySelector('form');
-    
+
         document.addEventListener('DOMContentLoaded', function () {
             const calendarEl = document.getElementById('calendar');
     
@@ -150,50 +150,44 @@
                         allDaySlot: false,
                         weekends: false,
                         select: function (info) {
-                            let start = new Date(info.start);
-                            let end = new Date(info.end);
-    
-                            // Adjust time to Budapest time zone (Europe/Budapest)
-                            const budapestStart = new Date(start.toLocaleString('en-US', { timeZone: 'Europe/Budapest' }));
-                            const budapestEnd = new Date(end.toLocaleString('en-US', { timeZone: 'Europe/Budapest' }));
-    
-                            let formattedStart = budapestStart.toISOString().slice(0, 16);
-                            let formattedEnd = budapestEnd.toISOString().slice(0, 16);
-    
+                            let start = new Date(info.start.getTime() - (info.start.getTimezoneOffset() * 60000));
+                            let end = new Date(info.end.getTime() - (info.end.getTimezoneOffset() * 60000));
+                            let formattedStart = start.toISOString().slice(0, 16);
+                            let formattedEnd = end.toISOString().slice(0, 16);
+
                             // Check if the selected time is within the allowed range (08:00 - 20:00)
-                            if (budapestStart.getHours() < 8 || budapestEnd.getHours() > 20) {
+                            if (start.getHours() < 8 || end.getHours() > 20) {
                                 alert("Csak 08:00 és 20:00 között lehet foglalni!");
                                 fromInput.value = '';
                                 toInput.value = '';
                                 return;
                             }
-    
+
                             // Check if the appointment duration exceeds 2 hours
-                            const duration = (budapestEnd - budapestStart) / (1000 * 60 * 60); // Convert milliseconds to hours
+                            const duration = (end - start) / (1000 * 60 * 60); // Convert milliseconds to hours
                             if (duration > 2) {
                                 alert("Az időpontok maximum 2 órásak lehetnek!");
                                 fromInput.value = '';
                                 toInput.value = '';
                                 return;
                             }
-    
+
                             // Check if the selected time conflicts with existing bookings
                             let conflictFound = false;
                             for (let unavailable of data) {
                                 let unStart = new Date(unavailable.dateFrom);
                                 let unEnd = new Date(unavailable.dateTo);
-    
-                                unStart = new Date(unStart.toLocaleString('en-US', { timeZone: 'Europe/Budapest' }));
-                                unEnd = new Date(unEnd.toLocaleString('en-US', { timeZone: 'Europe/Budapest' }));
-    
+                                unStart = new Date(unStart.getTime() - unStart.getTimezoneOffset() * 60000);
+                                unEnd = new Date(unEnd.getTime() - unEnd.getTimezoneOffset() * 60000);
+
                                 // Check for time overlap
-                                if ((budapestStart >= unStart && budapestStart < unEnd) || (budapestEnd > unStart && budapestEnd <= unEnd)) {
+                                if ((start >= unStart && start < unEnd) || (end > unStart && end <= unEnd)) {
                                     conflictFound = true;
                                     alert("A kiválasztott időpont nem elérhető!");
                                     break;
                                 }
                             }
-    
+
                             if (!conflictFound) {
                                 fromInput.value = formattedStart;
                                 toInput.value = formattedEnd;
@@ -204,8 +198,8 @@
                         },
                         events: data.map(slot => ({
                             title: "Foglalt",
-                            start: new Date(slot.dateFrom).toLocaleString('en-US', { timeZone: 'Europe/Budapest' }),
-                            end: new Date(slot.dateTo).toLocaleString('en-US', { timeZone: 'Europe/Budapest' }),
+                            start: slot.dateFrom,
+                            end: slot.dateTo,
                             color: "#ff6f61"
                         })),
                         validRange: {
@@ -216,17 +210,16 @@
                     calendar.render();
                 })
                 .catch(error => console.error('Error fetching appointments:', error));
-    
+
         });
-    
+
         form.addEventListener('submit', function (e) {
-            if (!fromInput.value || !toInput.value || fromInput.value == null) {
-                e.preventDefault();  // Prevent form submission
-                alert("Kérjük, válasszon kezdési és befejezési időpontot!");
-            }
-        });
+        if (!fromInput.value || !toInput.value || fromInput.value == null) {
+            e.preventDefault();  // Prevent form submission
+            alert("Kérjük, válasszon kezdési és befejezési időpontot!");
+        }
+    });
     </script>
-    
     
     
 
