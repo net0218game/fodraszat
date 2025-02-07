@@ -150,19 +150,18 @@
                         allDaySlot: false,
                         weekends: false,
                         select: function (info) {
-                            // Ensure correct handling of Budapest time zone
                             let start = new Date(info.start);
                             let end = new Date(info.end);
     
-                            // Adjust time to the Budapest time zone
-                            start = new Date(start.toLocaleString('en-US', { timeZone: 'Europe/Budapest' }));
-                            end = new Date(end.toLocaleString('en-US', { timeZone: 'Europe/Budapest' }));
-                            
-                            let formattedStart = start.toISOString().slice(0, 16);
-                            let formattedEnd = end.toISOString().slice(0, 16);
+                            // Adjust time to Budapest time zone (Europe/Budapest)
+                            const budapestStart = new Date(start.toLocaleString('en-US', { timeZone: 'Europe/Budapest' }));
+                            const budapestEnd = new Date(end.toLocaleString('en-US', { timeZone: 'Europe/Budapest' }));
+    
+                            let formattedStart = budapestStart.toISOString().slice(0, 16);
+                            let formattedEnd = budapestEnd.toISOString().slice(0, 16);
     
                             // Check if the selected time is within the allowed range (08:00 - 20:00)
-                            if (start.getHours() < 8 || end.getHours() > 20) {
+                            if (budapestStart.getHours() < 8 || budapestEnd.getHours() > 20) {
                                 alert("Csak 08:00 és 20:00 között lehet foglalni!");
                                 fromInput.value = '';
                                 toInput.value = '';
@@ -170,7 +169,7 @@
                             }
     
                             // Check if the appointment duration exceeds 2 hours
-                            const duration = (end - start) / (1000 * 60 * 60); // Convert milliseconds to hours
+                            const duration = (budapestEnd - budapestStart) / (1000 * 60 * 60); // Convert milliseconds to hours
                             if (duration > 2) {
                                 alert("Az időpontok maximum 2 órásak lehetnek!");
                                 fromInput.value = '';
@@ -188,7 +187,7 @@
                                 unEnd = new Date(unEnd.toLocaleString('en-US', { timeZone: 'Europe/Budapest' }));
     
                                 // Check for time overlap
-                                if ((start >= unStart && start < unEnd) || (end > unStart && end <= unEnd)) {
+                                if ((budapestStart >= unStart && budapestStart < unEnd) || (budapestEnd > unStart && budapestEnd <= unEnd)) {
                                     conflictFound = true;
                                     alert("A kiválasztott időpont nem elérhető!");
                                     break;
@@ -227,6 +226,7 @@
             }
         });
     </script>
+    
     
     
 
