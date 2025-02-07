@@ -17,7 +17,7 @@
                     <tr>
                         <th>Név</th>
                         <th>E-mail</th>
-                        <th>telefonszám</th>
+                        <th>Telefonszám</th>
                         <th>Időpont</th>
                         <th>Időpont Vége</th>
                         <th>Szolgáltatás</th>
@@ -29,10 +29,10 @@
                     <% appointments.filter(appointment => appointment.status !== 'Completed').forEach(appointment => { %>
                     <tr>
                         <td data-label="Név"><%= appointment.name %></td>
-                        <td data-label="E-mail"><%= appointment.email %></td>
-                        <td data-label="Telefonszám"><%= appointment.phone %></td>
-                        <td data-label="Időpont"><%= appointment.dateFrom.toLocaleString() %></td>
-                        <td data-label="Időpont Vége"><%= appointment.dateTo.toLocaleString() %></td>
+                        <td data-label="E-mail"><a href="mailto:<%= appointment.email %>"><%= appointment.email %></a></td>
+                        <td data-label="Telefonszám"><a href="tel:+<%= appointment.phone %>"><%= appointment.phone %></a></td>
+                        <td data-label="Időpont"><%= new Date(appointment.dateFrom).toISOString().slice(0, 10).replace(/-/g, '.') + ' ' + new Date(appointment.dateFrom).toISOString().slice(11, 16) %></td>
+                        <td data-label="Időpont Vége"><%= new Date(appointment.dateTo).toISOString().slice(0, 10).replace(/-/g, '.') + ' ' + new Date(appointment.dateTo).toISOString().slice(11, 16) %></td>
                         <td data-label="Szolgáltatás"><%= appointment.service %></td>
                         <td data-label="Státusz">
                             <form action="/admin/update" method="POST">
