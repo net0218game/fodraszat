@@ -113,7 +113,7 @@
 
     <!-- FullCalendar JS -->
     <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.0/main.min.js"></script>
-
+    
     <script>
         const fromInput = document.getElementById('dateFrom');
         const toInput = document.getElementById('dateTo');
@@ -150,13 +150,13 @@
                         allDaySlot: false,
                         weekends: false,
                         select: function (info) {
-                            // Ensure correct handling of time zone offsets
+                            // Ensure correct handling of time zone offsets (Budapest time zone)
                             let start = new Date(info.start);
                             let end = new Date(info.end);
                             
-                            // Adjust time to the browser's local timezone
-                            start = new Date(start.toLocaleString('en-US', { timeZone: 'UTC' }));
-                            end = new Date(end.toLocaleString('en-US', { timeZone: 'UTC' }));
+                            // Adjust time to the Budapest time zone
+                            start = new Date(start.toLocaleString('en-US', { timeZone: 'Europe/Budapest' }));
+                            end = new Date(end.toLocaleString('en-US', { timeZone: 'Europe/Budapest' }));
                             
                             let formattedStart = start.toISOString().slice(0, 16);
                             let formattedEnd = end.toISOString().slice(0, 16);
@@ -184,8 +184,8 @@
                                 let unStart = new Date(unavailable.dateFrom);
                                 let unEnd = new Date(unavailable.dateTo);
     
-                                unStart = new Date(unStart.toLocaleString('en-US', { timeZone: 'UTC' }));
-                                unEnd = new Date(unEnd.toLocaleString('en-US', { timeZone: 'UTC' }));
+                                unStart = new Date(unStart.toLocaleString('en-US', { timeZone: 'Europe/Budapest' }));
+                                unEnd = new Date(unEnd.toLocaleString('en-US', { timeZone: 'Europe/Budapest' }));
     
                                 // Check for time overlap
                                 if ((start >= unStart && start < unEnd) || (end > unStart && end <= unEnd)) {
@@ -205,8 +205,8 @@
                         },
                         events: data.map(slot => ({
                             title: "Foglalt",
-                            start: new Date(slot.dateFrom).toISOString(),
-                            end: new Date(slot.dateTo).toISOString(),
+                            start: new Date(slot.dateFrom).toLocaleString('en-US', { timeZone: 'Europe/Budapest' }),
+                            end: new Date(slot.dateTo).toLocaleString('en-US', { timeZone: 'Europe/Budapest' }),
                             color: "#ff6f61"
                         })),
                         validRange: {
@@ -227,6 +227,7 @@
             }
         });
     </script>
+    
     
     
 
