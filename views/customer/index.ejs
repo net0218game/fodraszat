@@ -118,7 +118,7 @@
         const fromInput = document.getElementById('dateFrom');
         const toInput = document.getElementById('dateTo');
         const form = document.querySelector('form');
-
+    
         document.addEventListener('DOMContentLoaded', function () {
             const calendarEl = document.getElementById('calendar');
     
@@ -150,11 +150,17 @@
                         allDaySlot: false,
                         weekends: false,
                         select: function (info) {
-                            let start = new Date(info.start.getTime() - (info.start.getTimezoneOffset() * 60000));
-                            let end = new Date(info.end.getTime() - (info.end.getTimezoneOffset() * 60000));
+                            // Ensure correct handling of time zone offsets
+                            let start = new Date(info.start);
+                            let end = new Date(info.end);
+                            
+                            // Adjust time to the browser's local timezone
+                            start = new Date(start.toLocaleString('en-US', { timeZone: 'UTC' }));
+                            end = new Date(end.toLocaleString('en-US', { timeZone: 'UTC' }));
+                            
                             let formattedStart = start.toISOString().slice(0, 16);
                             let formattedEnd = end.toISOString().slice(0, 16);
-
+    
                             // Check if the selected time is within the allowed range (08:00 - 20:00)
                             if (start.getHours() < 8 || end.getHours() > 20) {
                                 alert("Csak 08:00 és 20:00 között lehet foglalni!");
@@ -162,7 +168,7 @@
                                 toInput.value = '';
                                 return;
                             }
-
+    
                             // Check if the appointment duration exceeds 2 hours
                             const duration = (end - start) / (1000 * 60 * 60); // Convert milliseconds to hours
                             if (duration > 2) {
@@ -171,15 +177,16 @@
                                 toInput.value = '';
                                 return;
                             }
-
+    
                             // Check if the selected time conflicts with existing bookings
                             let conflictFound = false;
                             for (let unavailable of data) {
                                 let unStart = new Date(unavailable.dateFrom);
                                 let unEnd = new Date(unavailable.dateTo);
-                                unStart = new Date(unStart.getTime() - unStart.getTimezoneOffset() * 60000);
-                                unEnd = new Date(unEnd.getTime() - unEnd.getTimezoneOffset() * 60000);
-
+    
+                                unStart = new Date(unStart.toLocaleString('en-US', { timeZone: 'UTC' }));
+                                unEnd = new Date(unEnd.toLocaleString('en-US', { timeZone: 'UTC' }));
+    
                                 // Check for time overlap
                                 if ((start >= unStart && start < unEnd) || (end > unStart && end <= unEnd)) {
                                     conflictFound = true;
@@ -187,7 +194,7 @@
                                     break;
                                 }
                             }
-
+    
                             if (!conflictFound) {
                                 fromInput.value = formattedStart;
                                 toInput.value = formattedEnd;
@@ -198,8 +205,8 @@
                         },
                         events: data.map(slot => ({
                             title: "Foglalt",
-                            start: slot.dateFrom,
-                            end: slot.dateTo,
+                            start: new Date(slot.dateFrom).toISOString(),
+                            end: new Date(slot.dateTo).toISOString(),
                             color: "#ff6f61"
                         })),
                         validRange: {
@@ -210,15 +217,15 @@
                     calendar.render();
                 })
                 .catch(error => console.error('Error fetching appointments:', error));
-
+    
         });
-
+    
         form.addEventListener('submit', function (e) {
-        if (!fromInput.value || !toInput.value || fromInput.value == null) {
-            e.preventDefault();  // Prevent form submission
-            alert("Kérjük, válasszon kezdési és befejezési időpontot!");
-        }
-    });
+            if (!fromInput.value || !toInput.value || fromInput.value == null) {
+                e.preventDefault();  // Prevent form submission
+                alert("Kérjük, válasszon kezdési és befejezési időpontot!");
+            }
+        });
     </script>
     
     
