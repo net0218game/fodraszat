@@ -34,13 +34,14 @@ const adminRoutes = require('./routes/adminRoutes');
 const appointmentRoutes = require('./routes/appointmentRoutes');
 
 // Default route (Home page)
-app.get('/', (req, res) => {
-    res.redirect('/customer');
+app.get('/app', (req, res) => {
+    res.redirect('/app/customer');
 });
 
-app.use(appointmentRoutes);
-app.use('/customer', customerRoutes);
-app.use('/admin', adminRoutes);
+// Prefix all routes with /app
+app.use('/app', appointmentRoutes);
+app.use('/app/customer', customerRoutes);
+app.use('/app/admin', adminRoutes);
 
 // Start the server
 const PORT = process.env.PORT || 3000;
